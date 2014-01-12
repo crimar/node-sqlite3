@@ -1,7 +1,7 @@
 {
     "name": "sqlite3",
     "description": "Asynchronous, non-blocking SQLite3 bindings",
-    "version": "2.1.19",
+    "version": "2.2.0-alpha",
     "homepage": "http://github.com/mapbox/node-sqlite3",
     "author": {
         "name": "MapBox",
@@ -10,8 +10,8 @@
     "binary": {
         "module_name": "node_sqlite3",
         "module_path": "./lib",
-        "remote_uri": "http://node-sqlite3.s3.amazonaws.com",
-        "template": "{configuration}/{module_name}-v{major}.{minor}.a-{node_abi}-{platform}-{arch}.tar.gz"
+        "remote_uri": "http://node-pre-gyp-tests.s3-us-west-1.amazonaws.com",
+        "template": "{configuration}/{module_name}-v{major}.{minor}.{patch}-{node_abi}-{platform}-{arch}.tar.gz"
     },
     "contributors": [
         "Konstantin Käfer <mail@kkaefer.com>",
