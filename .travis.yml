@@ -37,7 +37,7 @@ script:
 - npm test
 - make clean
 # test source compile against system libsqlite3
-- if [[ "$platform" == 'linux' ]]; sudo apt-get -qq update; sudo apt-get -qq install libsqlite3-dev; fi
+- if [[ "$platform" == 'linux' ]]; then sudo apt-get -qq update; sudo apt-get -qq install libsqlite3-dev; fi
 - make clean
 - npm install --build-from-source --sqlite=/usr
 - npm test
