@@ -38,7 +38,7 @@ script:
  - npm install
  - npm test
  - make clean
- # test source compile against external libsqlite3
+ # test source compile against system libsqlite3
  - sudo apt-get -qq update
  - sudo apt-get -qq install libsqlite3-dev
  - make clean
