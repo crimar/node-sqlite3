@@ -28,11 +28,12 @@ script:
  - npm install
  - npm test
  # publish success
- - IS_TAG=$(git describe --exact-match --tags HEAD || true)
- - FORCE_PUBLISH=$(echo $TRAVIS_COMMIT | grep -q "[publish]" || true)
- - echo $IS_TAG
- - echo $FORCE_PUBLISH
- - if [ $IS_TAG ] || [ $FORCE_PUBLISH ]; node-pre-gyp package publish; fi;
+ - SHOULD_PUBLISH=false
+ - if [[ $TRAVIS_BRANCH == `git describe --exact-match --tags HEAD` ]]; then SHOULD_PUBLISH=true; fi
+ - echo $SHOULD_PUBLISH
+ - if [[ $TRAVIS_COMMIT == *\[publish\]* ]]; then SHOULD_PUBLISH=true; fi
+ - echo $SHOULD_PUBLISH
+ - if [[ $SHOULD_PUBLISH == true ]]; then node-pre-gyp package publish; fi;
  # test source compile against external libsqlite3
  - sudo apt-get -qq install libsqlite3-dev
  - make clean
