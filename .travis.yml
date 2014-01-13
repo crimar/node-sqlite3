@@ -10,23 +10,17 @@ env:
     - secure: HxCS2dQAWI0KmCFnFNNZoucG4FeAW+itG7+Hp0dNtwmxZzGOZYFO2bZcGvTAMNfVN++oqLxTebYQI1oB5yUl5mPJjrjthaGS6Zq3S6rfJcXiv+icYgEXlR6ejQ97dsHw1Jeg8nedCQlI4kHfvG6pgBLhq9hnugxH1Cjhdt14E9U=
 
 before_install:
- - sudo apt-get -qq update
+ # put node-pre-gyp on path
+ - export PATH=./node_modules/.bin/:$PATH
+ - npm install mocha
 
 install:
- # test installing from a binary
- - npm install
- - npm install mocha
+ # test installing from source
+ - npm install --build-from-source
  - npm test
 
 before_script:
- - make clean
-
-script:
- # put node-pre-gyp on path
- - export PATH=./node_modules/.bin/:$PATH
- # test source compile with internal libsqlite3
- - npm install
- - npm test
+ # test publishing
  # publish success
  - SHOULD_PUBLISH=false
  - if [[ $TRAVIS_BRANCH == `git describe --exact-match --tags HEAD` ]]; then SHOULD_PUBLISH=true; fi
@@ -35,8 +29,17 @@ script:
  - echo $SHOULD_PUBLISH
  - if [[ $TRAVIS_COMMIT =~ [publish] ]]; then SHOULD_PUBLISH=true; fi
  - echo $SHOULD_PUBLISH
+ - SHOULD_PUBLISH=true
  - if [[ $SHOULD_PUBLISH == true ]]; then node-pre-gyp package publish; fi;
+
+script:
+ # test install from published binary
+ - make clean
+ - npm install
+ - npm test
+ - make clean
  # test source compile against external libsqlite3
+ - sudo apt-get -qq update
  - sudo apt-get -qq install libsqlite3-dev
  - make clean
  - npm install --build-from-source --sqlite=/usr
@@ -51,7 +54,7 @@ script:
  - sudo apt-get -y install binutils:i386 cpp:i386 gcc-4.6:i386 g++-4.6:i386 libstdc++6-4.6-dev:i386 | true
  # test source compile in 32 bit mode with internal libsqlite3
  - CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source
- # publish success
+ # publish 32 bit build
  - if [[ $SHOULD_PUBLISH == true ]]; then node-pre-gyp package publish; fi;
  - npm test
  - make clean
