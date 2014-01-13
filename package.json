@@ -11,7 +11,7 @@
         "module_name": "node_sqlite3",
         "module_path": "./lib",
         "remote_uri": "http://node-sqlite3.s3.amazonaws.com",
-        "template": "{configuration}/{module_name}-v{major}.{minor}.{patch}-{node_abi}-{platform}-{arch}.tar.gz"
+        "template": "{configuration}/{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz"
     },
     "contributors": [
         "Konstantin Käfer <mail@kkaefer.com>",
@@ -35,7 +35,7 @@
         "url": "git://github.com/mapbox/node-sqlite3.git"
     },
     "dependencies": {
-        "node-pre-gyp": "~0.2.1"
+        "node-pre-gyp": "~0.2.4"
     },
     "bundledDependencies":["node-pre-gyp"],
     "engines": {
