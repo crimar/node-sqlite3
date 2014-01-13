@@ -27,7 +27,7 @@ install:
 
 before_script:
 # test publishing
-- if [[ $TRAVIS_BRANCH == `git describe --exact-match --tags HEAD` ]] || [[ $TRAVIS_COMMIT =~ '[publish]' ]]; then node-pre-gyp package publish; fi
+- if [[ $TRAVIS_BRANCH == `git describe --tags --always HEAD` ]] || [[ $TRAVIS_COMMIT =~ '[publish]' ]]; then node-pre-gyp package publish; fi
 
 script:
 # test install from published binary
@@ -56,7 +56,7 @@ script:
 - if [[ "$platform" == 'linux' ]]; then CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source; else npm install --build-from-source; fi
 - npm test
 # publish 32 bit build
-- if [[ $TRAVIS_BRANCH == `git describe --exact-match --tags HEAD` ]] || [[ $TRAVIS_COMMIT =~ '[publish]' ]]; then node-pre-gyp package publish; fi
+- if [[ $TRAVIS_BRANCH == `git describe --tags --always HEAD` ]] || [[ $TRAVIS_COMMIT =~ '[publish]' ]]; then node-pre-gyp package publish; fi
 - make clean
 # test source compile in 32 bit mode against external libsqlite3
-- - if [[ "$platform" == 'linux' ]]; then sudo apt-get -y install libsqlite3-dev:i386; CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source --sqlite=/usr; npm test; fi
+- if [[ "$platform" == 'linux' ]]; then sudo apt-get -y install libsqlite3-dev:i386; CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source --sqlite=/usr; npm test; fi
