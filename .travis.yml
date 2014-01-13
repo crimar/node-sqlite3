@@ -19,6 +19,7 @@ before_install:
 - node --version
 - npm --version
 - npm install mocha
+- platform=$(uname -s | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/")
 
 install:
 # test installing from source
@@ -36,8 +37,7 @@ script:
 - npm test
 - make clean
 # test source compile against system libsqlite3
-- sudo apt-get -qq update
-- sudo apt-get -qq install libsqlite3-dev
+- if [[ "$platform" == 'linux' ]]; sudo apt-get -qq update; sudo apt-get -qq install libsqlite3-dev; fi
 - make clean
 - npm install --build-from-source --sqlite=/usr
 - npm test
@@ -45,7 +45,6 @@ script:
 # node v0.8 and above provide pre-built 32 bit and 64 bit binaries
 # so here we use the 32 bit ones to also test 32 bit builds
 - NVER=`node -v`
-- platform=$(uname -s | sed "y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/")
 - wget http://nodejs.org/dist/${NVER}/node-${NVER}-${platform}-x86.tar.gz
 - tar xf node-${NVER}-${platform}-x86.tar.gz
 # enable 32 bit node
