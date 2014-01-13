@@ -33,6 +33,8 @@ script:
  - echo $SHOULD_PUBLISH
  - if [[ $TRAVIS_COMMIT == *\[publish\]* ]]; then SHOULD_PUBLISH=true; fi
  - echo $SHOULD_PUBLISH
+ - if [[ $TRAVIS_COMMIT =~ [publish] ]]; then SHOULD_PUBLISH=true; fi
+ - echo $SHOULD_PUBLISH
  - if [[ $SHOULD_PUBLISH == true ]]; then node-pre-gyp package publish; fi;
  # test source compile against external libsqlite3
  - sudo apt-get -qq install libsqlite3-dev
@@ -50,7 +52,7 @@ script:
  # test source compile in 32 bit mode with internal libsqlite3
  - CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source
  # publish success
- - if [ $IS_TAG ] || [ $FORCE_PUBLISH ]; node-pre-gyp package publish; fi;
+ - if [[ $SHOULD_PUBLISH == true ]]; then node-pre-gyp package publish; fi;
  - npm test
  - make clean
  - sudo apt-get -y install libsqlite3-dev:i386
