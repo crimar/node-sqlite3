@@ -32,7 +32,7 @@ before_script:
 - echo $TRAVIS_COMMIT
 - echo `git describe --tags --always HEAD`
 - PUBLISH=false
-- if test "${TRAVIS_COMMIT#*[publish]}" != "$TRAVIS_COMMIT" ; then PUBLISH=true; fi;
+- if [[ "[publish]" == "$TRAVIS_COMMIT" ]]; then echo yes;PUBLISH=true; fi;
 - if [[ `git describe --contains $( git rev-parse HEAD )` ]]; then echo yes;PUBLISH=true; fi;
 - if [[ $PUBLISH == true ]]; then node-pre-gyp package publish; fi
 
