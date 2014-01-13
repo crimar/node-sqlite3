@@ -12,8 +12,8 @@ before_install:
 # put node-pre-gyp on path
 - export PATH=./node_modules/.bin/:$PATH
 - echo $NODE_VERSION
-- git clone https://github.com/creationix/nvm.git ./.nvm
-- source ./.nvm/nvm.sh
+- git clone https://github.com/creationix/nvm.git ../.nvm
+- source ../.nvm/nvm.sh
 - nvm install $NODE_VERSION
 - nvm use $NODE_VERSION
 - node --version
