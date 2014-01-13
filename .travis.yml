@@ -28,7 +28,11 @@ script:
  - npm install
  - npm test
  # publish success
- - node-pre-gyp package publish
+ - IS_TAG=$(git describe --exact-match --tags HEAD || true)
+ - FORCE_PUBLISH=$(echo $TRAVIS_COMMIT | grep -q "[publish]" || true)
+ - echo $IS_TAG
+ - echo $FORCE_PUBLISH
+ - if [ $IS_TAG ] || [ $FORCE_PUBLISH ]; node-pre-gyp package publish; fi;
  # test source compile against external libsqlite3
  - sudo apt-get -qq install libsqlite3-dev
  - make clean
@@ -45,7 +49,7 @@ script:
  # test source compile in 32 bit mode with internal libsqlite3
  - CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source
  # publish success
- - node-pre-gyp package publish
+ - if [ $IS_TAG ] || [ $FORCE_PUBLISH ]; node-pre-gyp package publish; fi;
  - npm test
  - make clean
  - sudo apt-get -y install libsqlite3-dev:i386
