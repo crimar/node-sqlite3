@@ -61,6 +61,7 @@ script:
 - if [[ "$platform" == 'linux' ]]; then CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source; else npm install --build-from-source; fi
 - npm test
 # publish 32 bit build
-- if [[ $PUBLISH == true ]]; then node-pre-gyp package publish; fi- make clean
+- if [[ $PUBLISH == true ]]; then node-pre-gyp package publish; fi;
+- make clean
 # test source compile in 32 bit mode against external libsqlite3
 - if [[ "$platform" == 'linux' ]]; then sudo apt-get -y install libsqlite3-dev:i386; CC=gcc-4.6 CXX=g++-4.6 npm install --build-from-source --sqlite=/usr; npm test; fi
